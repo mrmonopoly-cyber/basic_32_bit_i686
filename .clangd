@@ -1,0 +1,7 @@
+CompileFlags:
+   Compiler: ./i686-elf/bin/i686-elf-gcc
+   Add:
+     [
+       "-Wall",
+       "-Wextra",
+     ]

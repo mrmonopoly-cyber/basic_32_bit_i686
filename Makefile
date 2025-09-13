@@ -2,7 +2,10 @@ BIN_IMAGE := isodir/boot/damos.bin
 
 .PHONY: all
 
-all: build grub_image
+all: build grub_image run
+
+run: grub_image
+	qemu-system-i386 -cdrom damos.iso
 
 grub_image: build $(BIN_IMAGE)
 	$(shell  if ! grub-file --is-x86-multiboot $(BIN_IMAGE); then echo "damos.bin is not valid x86-multiboot format"; fi)
