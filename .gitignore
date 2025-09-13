@@ -1,1 +1,4 @@
 i686-elf
+boot.o
+*.o
+*.bin
