@@ -1,6 +1,6 @@
 BIN_IMAGE := isodir/boot/damos.bin
 SRC := src/
-DEPS := $(wildcard $(SRC)*.c)
+DEPS := $(shell find $(SRC) -type f -name "*.c")
 OBJS := $(DEPS:.c=.o)
 CC := ./i686-elf/bin/i686-elf-gcc
 CFLAGS := -std=gnu99 -ffreestanding -O2 
@@ -9,6 +9,9 @@ WARNINGS := -Wall -Wextra
 .PHONY: all
 
 all: build grub_image run
+
+show:
+	$(info $(DEPS))
 
 run: grub_image
 	qemu-system-i386 -cdrom damos.iso
