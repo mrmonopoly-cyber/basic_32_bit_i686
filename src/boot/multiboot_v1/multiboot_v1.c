@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include "../stack/stack.h"
 
 #define V_ALIGN (1<<0)                    /* align loaded modules on page boundaries */
 #define V_MEMINFO  (1<<1)                 /* provide memory map */
@@ -20,17 +19,3 @@ struct multiboot_header mb_header __attribute__((section(".multiboot")))= {
   .CHECKSUM = V_CHECKSUM,
 };
 
-__attribute__((naked, section(".text")));
-void _start(void)
-{
-  asm volatile ("movl %0, %%esp"
-       :
-       :"r"(stack + sizeof(stack))
-       :);
-
-  asm volatile(
-      "call kernel_main\n"
-      "cli\n"
-      "1: hlt\n"
-      "jmp 1b");
-}

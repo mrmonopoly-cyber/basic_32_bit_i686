@@ -1,3 +1,5 @@
+#include "kernel.h"
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -116,7 +118,7 @@ void terminal_writestring(const char* data)
 	terminal_write(data, strlen(data));
 }
 
-void kernel_main(void) 
+void __kmain(void) 
 {
 	/* Initialize terminal interface */
 	terminal_initialize();
