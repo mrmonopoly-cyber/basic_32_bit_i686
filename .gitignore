@@ -4,3 +4,4 @@ boot.o
 *.bin
 *.so
 *.iso
+build/**

@@ -1,7 +1,8 @@
 BIN_IMAGE := isodir/boot/damos.bin
-SRC := src/
+SRC := src
+BUILD := build
 DEPS := $(shell find $(SRC) -type f -name "*.c")
-OBJS := $(DEPS:.c=.o)
+OBJS := $(patsubst $(SRC)/%.c,$(BUILD)/%.o,$(DEPS))
 CC := ./i686-elf/bin/i686-elf-gcc
 CFLAGS := -std=gnu99 -ffreestanding -O2 
 WARNINGS := -Wall -Wextra
@@ -23,8 +24,9 @@ grub_image: build $(BIN_IMAGE)
 build: linker.ld $(OBJS)
 	$(CC) -T linker.ld -o $(BIN_IMAGE) $(OBJS) -ffreestanding -O2 -nostdlib -lgcc
 
-%.o: %.c $(DEPS)
+$(BUILD)/%.o: $(SRC)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) -c -o $@ $< $(CFLAGS) $(WARNINGS)
 
 clean:
-	rm -f *.o ./isodir/boot/*.bin *.iso
+	rm -rf ./isodir/boot/*.bin *.iso ./build/*
